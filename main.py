@@ -22,25 +22,28 @@ if __name__ == "__main__":
     learning_rate = float(config["parameters"]["learning_rate"])
     epochs = int(config["parameters"]["epochs"])
     normalize = config["parameters"]["normalize"]
-
+    dataset = config["dataset"]["name"]
 
     # https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html
-    data = load_breast_cancer()
+    data = None
+    if dataset == "cancer":
+        data = load_breast_cancer(return_X_y=True)
+    elif dataset == "diabetes":
+        data = load_diabetes(return_X_y=True)
+    else:
+         raise ValueError(f"Unsupported dataset name passed in config file: {dataset}. Please choose from 'cancer', or 'diabetes'.")
 
-    features, labels = load_diabetes(return_X_y=True)
-    labels = (labels > labels.mean()).astype(int)
+    features, labels = data
+    # labels = (labels > labels.mean()).astype(int)
     X_train, X_test, y_train, y_test = train_test_split(
-        features, labels, test_size=0.1, random_state=42
-    )
+        features, labels, test_size=0.1, random_state=4)
     if normalize:
         scaler = StandardScaler()
         X_train = scaler.fit_transform(X_train)
         X_test = scaler.fit_transform(X_test)
     model = None
     if model_name == "LogisticRegression":
-        model = LogisticRegression(
-            learning_rate, epochs, input_size=X_train.shape[1]
-        )
+        model = LogisticRegression(learning_rate, epochs, input_size=X_train.shape[1])
     elif model_name == "SVM":
         print("ADD SVM MODEL HERE")
         # Add svm model here
