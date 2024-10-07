@@ -5,14 +5,14 @@ class Widrow:
     def __init__(self, features):
         np.random.seed(0)
         self.weights = np.random.rand(features) * 0.05
-        self.bias = 0
+        self.bias = 0.01
 
     def forward(self, input):
         output = np.dot(input, self.weights) + self.bias
         output = np.where(output >= 0.5, 1, 0)
         return output
 
-    def fit(self, X, y, epochs=10, lr=1e-12):
+    def fit(self, X, y, epochs, lr):
         observations, features = X.shape
 
         # training

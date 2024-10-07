@@ -8,6 +8,7 @@ from sklearn.datasets import load_breast_cancer
 from sklearn.preprocessing import StandardScaler
 from LogisticRegression import LogisticRegression
 from sklearn.model_selection import train_test_split
+import time
 
 
 def load_config(file_path):
@@ -45,6 +46,7 @@ if __name__ == "__main__":
         X_train = scaler.fit_transform(X_train)
         X_test = scaler.fit_transform(X_test)
     model = None
+    start_time = time.time()
     if model_name == "LogisticRegression":
         model = LogisticRegression(learning_rate, epochs, input_size=X_train.shape[1])
         model.fit(X_train, y_train)
@@ -80,5 +82,9 @@ if __name__ == "__main__":
         print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
     else:
         raise ValueError(
-            f"Unsupported model name passed in config file: {model_name}. Please choose from LogisticRegression, 'SVM', or 'Widrow'."
+            f"Unsupported model name passed in config file: {model_name}. Please choose from LogisticRegression, 'SVM', or ''."
         )
+
+end_time = time.time()
+print(f"Time taken for {model_name}: {end_time - start_time:.2f} seconds")
+
