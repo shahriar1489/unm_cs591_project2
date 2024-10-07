@@ -6,5 +6,5 @@ parameters:
   epochs: 100
   normalize: True
 dataset:
-  # name: diabetes
-  name: cancer
+  name: generate
+  # name: cancer
