@@ -1,4 +1,6 @@
 import numpy as np
+
+
 class Widrow:
     def __init__(self, features):
         np.random.seed(0)
@@ -7,6 +9,7 @@ class Widrow:
 
     def forward(self, input):
         output = np.dot(input, self.weights) + self.bias
+        output = np.where(output >= 0.5, 1, 0)
         return output
 
     def fit(self, X, y, epochs=10, lr=1e-12):
@@ -16,7 +19,7 @@ class Widrow:
         for epoch in range(epochs):
             total_loss = 0
             for o in range(observations):
-                y_hat = self.forward(X[o])
+                y_hat = np.dot(X[o], self.weights) + self.bias
 
                 # Error
                 error = y[o] - y_hat
@@ -26,7 +29,7 @@ class Widrow:
                 self.bias += lr * error
 
                 # squared error for loss
-                total_loss += error ** 2  
+                total_loss += error**2
 
             # average loss
             avg_loss = total_loss / observations
