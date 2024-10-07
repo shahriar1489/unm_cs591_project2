@@ -23,13 +23,14 @@ class Widrow:
 
                 # Error
                 error = y[o] - y_hat
+                loss = error**2
 
                 # weights and bias  update
                 self.weights += lr * error * X[o]
                 self.bias += lr * error
 
                 # squared error for loss
-                total_loss += error**2
+                total_loss += loss
 
             # average loss
             avg_loss = total_loss / observations
