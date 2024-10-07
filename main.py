@@ -1,12 +1,14 @@
 import yaml
 
 from widrow_hoff import Widrow
+from svm_binary import SVM
 from sklearn.datasets import load_diabetes, make_blobs
 from sklearn.metrics import accuracy_score
 from sklearn.datasets import load_breast_cancer
 from sklearn.preprocessing import StandardScaler
 from LogisticRegression import LogisticRegression
 from sklearn.model_selection import train_test_split
+import time
 
 
 def load_config(file_path):
@@ -28,7 +30,7 @@ if __name__ == "__main__":
     if dataset == "cancer":
         data = load_breast_cancer(return_X_y=True)
     elif dataset == "generate":
-        data = make_blobs(n_samples=1000, n_features=1, centers=2 ,random_state=0)
+        data = make_blobs(n_samples=1000, n_features=1, centers=2, random_state=0)
     else:
         raise ValueError(
             f"Unsupported dataset name passed in config file: {dataset}. Please choose from 'cancer', or 'generate'."
@@ -44,6 +46,7 @@ if __name__ == "__main__":
         X_train = scaler.fit_transform(X_train)
         X_test = scaler.fit_transform(X_test)
     model = None
+    start_time = time.time()
     if model_name == "LogisticRegression":
         model = LogisticRegression(learning_rate, epochs, input_size=X_train.shape[1])
         model.fit(X_train, y_train)
@@ -54,8 +57,20 @@ if __name__ == "__main__":
         # Output the accuracy
         print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
     elif model_name == "SVM":
-        print("ADD SVM MODEL HERE")
-        # Add svm model here
+
+        # Initialize the SVM model
+        model = SVM(learning_rate=0.01, n_iters=1000)
+
+        # Fit the model on the dataset
+        model.fit(X_train, y_train)
+        predictions = model.predict(X_test)
+
+        # Calculate the accuracy of the model
+        accuracy = accuracy_score(y_test, predictions)
+
+        # Output the accuracy
+        print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
+
     elif model_name == "widrow":
         model = Widrow(X_train[0].shape[0])
         model.fit(X_train, y_train, epochs, lr=learning_rate)
@@ -67,9 +82,8 @@ if __name__ == "__main__":
         print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
     else:
         raise ValueError(
-<<<<<<< Updated upstream
-            f"Unsupported model name passed in config file: {model_name}. Please choose from LogisticRegression, 'SVM', or 'Widrow'."
-=======
             f"Unsupported model name passed in config file: {model_name}. Please choose from 'LogisticRegression', 'SVM', or 'Widrow'."
->>>>>>> Stashed changes
         )
+
+end_time = time.time()
+print(f"Time taken for {model_name}: {end_time - start_time:.2f} seconds")
