@@ -4,10 +4,12 @@ import numpy as np
 class Widrow:
     def __init__(self, features):
         np.random.seed(0)
+        # Initialization of the weight and bias.
         self.weights = np.random.rand(features) * 0.05
         self.bias = 0
 
     def forward(self, input):
+        # forward to get the output from the model
         output = np.dot(input, self.weights) + self.bias
         output = np.where(output >= 0.5, 1, 0)
         return output

@@ -67,5 +67,9 @@ if __name__ == "__main__":
         print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
     else:
         raise ValueError(
+<<<<<<< Updated upstream
             f"Unsupported model name passed in config file: {model_name}. Please choose from LogisticRegression, 'SVM', or 'Widrow'."
+=======
+            f"Unsupported model name passed in config file: {model_name}. Please choose from 'LogisticRegression', 'SVM', or 'Widrow'."
+>>>>>>> Stashed changes
         )

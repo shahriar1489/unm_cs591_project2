@@ -2,10 +2,11 @@ import numpy as np
 
 class LogisticRegression:
     def __init__(self, learning_rate, epochs, input_size):
+        np.random.seed(0)
         self.lr = learning_rate
         self.epochs = epochs
-        self.weights = np.random.randn(input_size) * 0.01
-        self.bias = 0
+        self.weights = np.random.randn(input_size) * 0.001
+        self.bias = 0.01
 
     def sigmoid(self, z):
         sigmoid_val = 1 / (1 + np.exp(-z))
