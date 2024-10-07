@@ -1,6 +1,7 @@
 import yaml
 
 from widrow_hoff import Widrow
+from svm_binary import SVM
 from sklearn.datasets import load_diabetes, make_blobs
 from sklearn.metrics import accuracy_score
 from sklearn.datasets import load_breast_cancer
@@ -54,8 +55,20 @@ if __name__ == "__main__":
         # Output the accuracy
         print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
     elif model_name == "SVM":
-        print("ADD SVM MODEL HERE")
-        # Add svm model here
+
+        # Initialize the SVM model
+        model = SVM(learning_rate=0.01, n_iters=1000)
+
+        # Fit the model on the dataset
+        model.fit(X_train, y_train)
+        predictions = model.predict(X_test)
+        
+        # Calculate the accuracy of the model
+        accuracy = accuracy_score(y_test, predictions)
+
+        # Output the accuracy
+        print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
+
     elif model_name == "widrow":
         model = Widrow(X_train[0].shape[0])
         model.fit(X_train, y_train, epochs, lr=learning_rate)
