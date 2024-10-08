@@ -1,10 +1,11 @@
 model:
-  name: widrow
+  name: weston
   version: 1.0
 parameters:
   learning_rate: 0.01
   epochs: 50
   normalize: True
 dataset:
-  name: generate
+  # name: generate
   # name: cancer
+  name: iris
