@@ -6,9 +6,9 @@ model:
 
 parameters:
   learning_rate:  0.01
-  epochs: 100
+  epochs: 1000
   normalize: True
 dataset:
-  # name: generate
+  name: generate
   # name: cancer
-  name: iris
+  # name: iris
