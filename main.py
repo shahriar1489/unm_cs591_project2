@@ -73,7 +73,7 @@ if __name__ == "__main__":
     elif model_name == "SVM":
 
         # Initialize the SVM model
-        model = SVM(learning_rate=0.01, n_iters=1000)
+        model = SVM(learning_rate=0.01, n_iters=epochs)
 
         # Fit the model on the dataset
         model.fit(X_train, y_train)

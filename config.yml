@@ -1,9 +1,13 @@
 model:
+  # name: SVM
   name: weston
+  # name: LogisticRegression
+  # name: widrow
+
 parameters:
-  learning_rate: 0.01
-  epochs: 1000
-  normalize: False
+  learning_rate:  0.01
+  epochs: 100
+  normalize: True
 dataset:
   # name: generate
   # name: cancer

@@ -1,5 +1,5 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 class LogisticRegression:
     def __init__(self, learning_rate, epochs, input_size):
         np.random.seed(0)
@@ -76,9 +76,11 @@ class LogisticRegression:
     def fit(self, input, labels):
         n_rows, n_features = input.shape
         
+        loss_list = []
         for i in range(self.epochs):
             predicted_labels = self.forward(input)
             loss = self.calculate_loss(labels, predicted_labels)
+            loss_list.append(loss)
 
             print(f'Epoch {i+1}, Loss: {loss}')
 
@@ -86,7 +88,12 @@ class LogisticRegression:
 
             self.weights += self.lr * gradient_weights
             self.bias += self.lr * gradient_bias
-
+        plt.plot(range(1, len(loss_list) + 1), loss_list, marker='o', color='red')
+        plt.title("Loss Reduction for Logistic Regression")
+        plt.xlabel("Epochs")
+        plt.ylabel("Average Loss")
+        plt.grid(True) # if we want grid
+        plt.show()
     
     def predict(self, input):
         """

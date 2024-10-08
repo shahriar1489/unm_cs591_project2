@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Widrow:
@@ -16,6 +17,7 @@ class Widrow:
 
     def fit(self, X, y, epochs, lr):
         observations, features = X.shape
+        loss_list = []
 
         # training
         for epoch in range(epochs):
@@ -36,4 +38,12 @@ class Widrow:
 
             # average loss
             avg_loss = total_loss / observations
+            loss_list.append(avg_loss)
             print(f"Epoch {epoch + 1}/{epochs}, Loss: {avg_loss}")
+
+        plt.plot(range(1, len(loss_list) + 1), loss_list, marker="o", color="red")
+        plt.title("Loss Reduction for Widrow Hoff Model.")
+        plt.xlabel("Epochs")
+        plt.ylabel("Average Loss")
+        plt.grid(True)  # if we want grid
+        plt.show()

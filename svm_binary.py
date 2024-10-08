@@ -34,18 +34,34 @@ class SVM:
     self.b = np.random.rand(1)
 
     y = np.where(y <= 0, -1, 1)
+    loss_list = []
 
     for _ in range(self.n_iters):
+      total_loss = 0 
       for idx, x_i in enumerate(X): #
         x_i = x_i.reshape((-1, 1))
         y_i_pred = self.forward(x_i)
-        if (y[idx] * y_i_pred >= 1):
+        
+        loss = (y[idx] * y_i_pred)[0]
+        total_loss += max(0, 1 - loss)
+        
+        if (loss >= 1):
           self.w -= self.lr * (2 * self.lambda_param * self.w) # updating weight by a factor of regularization term
           self.b -= 0 # not updating the bias
 
         else: # penalize  the weight and bias  for making error wrt to the weight
           self.w -= self.lr * ( 2 * self.lambda_param * self.w - (x_i * y[idx]) ) # no bias was used in this eqn
           self.b -= self.lr * y[idx]
+      avg_loss = total_loss / n_samples
+      loss_list.append(avg_loss) 
+      print(f"Iteration {_ + 1}: Average Loss: {avg_loss}")
 
+      
+    plt.plot(range(1, len(loss_list) + 1), loss_list, marker='o', color='red')
+    plt.title("Loss Reduction for Support Vector Machine")
+    plt.xlabel("Epochs")
+    plt.ylabel("Average Loss")
+    plt.grid(True) # if we want grid
+    plt.show()
   def predict(self, X):
         return np.sign(np.dot(X, self.w) - self.b)
