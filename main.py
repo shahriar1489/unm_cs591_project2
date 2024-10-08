@@ -96,7 +96,7 @@ if __name__ == "__main__":
         print(f"Accuracy on test dataset: {accuracy * 100:.2f}%")
     else:
         raise ValueError(
-            f"Unsupported model name passed in config file: {model_name}. Please choose from 'LogisticRegression', 'SVM','weston' or 'Widrow'."
+            f"Unsupported model name passed in config file: {model_name}. Please choose from 'LogisticRegression', 'SVM','weston' or 'widrow'."
         )
 
 end_time = time.time()

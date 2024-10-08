@@ -1,10 +1,9 @@
 model:
   name: weston
-  version: 1.0
 parameters:
   learning_rate: 0.01
-  epochs: 50
-  normalize: True
+  epochs: 1000
+  normalize: False
 dataset:
   # name: generate
   # name: cancer

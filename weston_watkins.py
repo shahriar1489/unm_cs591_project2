@@ -18,20 +18,20 @@ class Weston_Watkins:
         self.num_classes = num_classes
 
         self.weights = np.random.randn(num_classes, input_feature)
-        self.bias = np.zeros(num_classes)
+        self.bias = np.ones(num_classes)
 
     def forward(self, X):
-        return np.dot(X, self.weights.T) + self.bias
+        return np.dot(X, self.weights.T) 
 
     def fit(self, X, y):
         samples, features = X.shape
 
         num_classes = self.num_classes
-        avg_loss = 0.0
 
         # Training using gradient descent
         for epoch in range(self.epochs):
             # making gradient to zero like model.zero_grad before each epoch to aviod gradient accumulation.    
+            avg_loss = 0.0
             weight_gradient = np.zeros(self.weights.shape)
             bias_gradient = np.zeros(self.bias.shape) 
 
@@ -49,7 +49,7 @@ class Weston_Watkins:
                             if j != label and logits[j] - label_logits + 1 > 0
                         )
                         weight_gradient[r, :] -= x_index * class_sum
-                        bias_gradient[r] -= class_sum  # Update bias gradient
+                        bias_gradient[r] -= class_sum  
 
                     else:
                         # r != ci
@@ -57,7 +57,6 @@ class Weston_Watkins:
                         if margin > 0:
                             avg_loss += margin
                             weight_gradient[r, :] += x_index
-                            weight_gradient[label, :] -= x_index
                             bias_gradient[label] -= 1
 
             # Average loss
